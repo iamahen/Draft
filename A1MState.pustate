@@ -1,0 +1,38 @@
+ @startuml
+skinparam componentStyle rectangle
+
+node Imu{
+  card ImuEtll
+}
+
+node Gnss{
+  card GnssEtll
+}
+
+node Camera{
+  [image] -> [DL]
+  [DL] -right-> [CV]
+
+}
+
+
+
+[FSEKF]
+[LM]
+Imu --> FSEKF
+
+Gnss --> FSEKF
+
+
+FSEKF --> result
+result ---> [VMC]
+result -right-> LM
+LM --> FSEKF
+
+
+node HDMap{
+}
+
+HDMap --> LM
+CV --> LM
+@enduml
